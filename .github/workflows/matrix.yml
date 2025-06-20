@@ -63,13 +63,11 @@ jobs:
             const matrix = JSON.parse(context.payload.inputs.matrix_json);
             const artifactName = 'freqtrade-data';
             const runId = matrix.run_id;
-            const owner = matrix.owner;
-            const repo = matrix.repo;
 
             const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
               run_id: runId,
-              owner: owner,
-              repo: repo
             });
 
             const match = artifacts.data.artifacts.find(a => a.name === artifactName);
